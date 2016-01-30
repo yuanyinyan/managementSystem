@@ -4,57 +4,43 @@ import com.jdbc.model.Student;
 import com.jdbc.model.StudentDao;
 
 import java.sql.SQLException;
-import java.time.*;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
+ * 控制层
+ * <p/>
  * Created by yuanyin on 16/1/30.
  */
 public class StudentAction {
-    public static void main(String[] args) throws SQLException {
+
+    public void add(Student student) throws SQLException {
         StudentDao studentDao = new StudentDao();
-        Student student = new Student();
-        student.setUser_name("小美");
-        student.setSex(1);
-        student.setAge(15);
-        student.setBirthday(new Date());
-        student.setMobile("18999990678");
-        student.setEmail("1666666@qq.com");
-        student.setCreate_user("admin");
-        student.setUpdate_user("admin");
-        student.setIsdel(1);
+        studentDao.addStudent(student);
+    }
 
-//        student.setId(11);
-//        studentDao.delStudent(11);
-//        studentDao.updateStudent(student);
+    public void edit(Student student) throws SQLException {
+        StudentDao dao = new StudentDao();
+        dao.updateStudent(student);
+    }
 
-//        studentDao.addStudent(student);
+    public void del(int id) throws SQLException {
+        StudentDao dao = new StudentDao();
+        dao.delStudent(id);
+    }
 
-//        List<Student> studentList=studentDao.query();
-//        for (Student student1 : studentList) {
-//            System.out.println(student1.getUser_name());
-//        }
+    public List<Student> query() throws SQLException {
+        StudentDao dao = new StudentDao();
+        return dao.query();
+    }
 
-//        System.out.println(studentDao.query("美","189"));
+    public List<Student> query(List<Map<String, Object>> params) throws SQLException {
+        StudentDao dao = new StudentDao();
+        return dao.query(params);
+    }
 
-        List<Map<String, Object>> params = new ArrayList<Map<String, Object>>();
-        Map<String, Object> param = new HashMap<String, Object>();
-        param.put("name", "user_name");
-        param.put("rela", "like");
-        param.put("value", "'%美%'");
-        params.add(param);
-        param = new HashMap<String, Object>();
-        param.put("name", "mobile");
-        param.put("rela", "like");
-        param.put("value", "'%0000%'");
-        params.add(param);
-//        System.out.println(studentDao.query(params));
-
-        LocalDateTime localDateTime=LocalDateTime.of(2016,1,30,0,0,0);
-        ZoneId zoneId= ZoneId.systemDefault();
-        Instant instant=localDateTime.atZone(zoneId).toInstant();
-        Date date=Date.from(instant);
-        System.out.println(studentDao.query(date));
-
+    public Student get(int id) throws SQLException {
+        StudentDao dao = new StudentDao();
+        return dao.getStudent(id);
     }
 }

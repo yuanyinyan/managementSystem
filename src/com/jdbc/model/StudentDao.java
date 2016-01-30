@@ -67,11 +67,20 @@ public class StudentDao {
     }
 
     public List<Student> query() throws SQLException {
+        List<Student> studentList = new ArrayList<Student>();
         Connection connection = DBUtil.getConnection();
         Statement stmt = connection.createStatement();
-        ResultSet resultSet = stmt.executeQuery("SELECT * FROM student");
+        ResultSet resultSet = stmt.executeQuery("SELECT id,user_name,age FROM student");
 
-        return getStudentList(resultSet);
+        Student student;
+        while (resultSet.next()) {
+            student = new Student();
+            student.setId(resultSet.getInt("id"));
+            student.setUser_name(resultSet.getString("user_name"));
+            student.setAge(resultSet.getInt("age"));
+            studentList.add(student);
+        }
+        return studentList;
     }
 
     public List<Student> query(String name, String mobile) throws SQLException {
