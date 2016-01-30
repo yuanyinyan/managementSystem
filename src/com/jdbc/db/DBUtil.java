@@ -12,13 +12,20 @@ public class DBUtil {
     public static final String USER = "root";
     public static final String PASSWORD = "yywjm999569";
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        Statement stmt = connection.createStatement();
-        ResultSet resultSet = stmt.executeQuery("SELECT user_name,age FROM student");
-        while (resultSet.next()) {
-            System.out.println(resultSet.getString("user_name") + "," + resultSet.getInt("age"));
+    private static Connection connection;
+
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection= DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
+
+    public static Connection getConnection() {
+        return connection;
     }
 }
