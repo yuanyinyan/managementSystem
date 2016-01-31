@@ -32,7 +32,7 @@ public class StudentDao {
         ptmt.setString(6, student.getMobile());
         ptmt.setString(7, student.getCreate_user());
         ptmt.setString(8, student.getUpdate_user());
-        ptmt.setInt(9, student.getIsdel());
+        ptmt.setInt(9, 0);
         ptmt.execute();
     }
 
